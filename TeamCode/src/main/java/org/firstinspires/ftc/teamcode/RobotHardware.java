@@ -59,8 +59,8 @@ public class RobotHardware {
     private LinearOpMode myOpMode = null;   // gain access to methods in the calling OpMode.
 
     // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
-    private DcMotor leftDrive   = null;
-    private DcMotor rightDrive  = null;
+    public DcMotor leftDrive   = null;
+    public DcMotor rightDrive  = null;
 //    private DcMotor armMotor = null;
 //    private Servo   leftHand = null;
 //    private Servo   rightHand = null;
@@ -116,22 +116,6 @@ public class RobotHardware {
      * @param Drive     Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
      * @param Turn      Right/Left turning power (-1.0 to 1.0) +ve is CW
      */
-    public void driveRobot(double Drive, double Turn) {
-        // Combine drive and turn for blended motion.
-        double left  = Drive + Turn;
-        double right = Drive - Turn;
-
-        // Scale the values so neither exceed +/- 1.0
-        double max = Math.max(Math.abs(left), Math.abs(right));
-        if (max > 1.0)
-        {
-            left /= max;
-            right /= max;
-        }
-
-        // Use existing function to drive both wheels.
-        setDrivePower(left, right);
-    }
 
     /**
      * Pass the requested wheel motor powers to the appropriate hardware drive motors.
@@ -139,11 +123,6 @@ public class RobotHardware {
      * @param leftWheel     Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
      * @param rightWheel    Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
      */
-    public void setDrivePower(double leftWheel, double rightWheel) {
-        // Output the values to the motor drives.
-        leftDrive.setPower(leftWheel);
-        rightDrive.setPower(rightWheel);
-    }
 
     /**
      * Pass the requested arm power to the appropriate hardware drive motor
