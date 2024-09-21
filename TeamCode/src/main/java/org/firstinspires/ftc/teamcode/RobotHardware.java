@@ -62,11 +62,11 @@ public class RobotHardware {
     public DcMotor leftDrive   = null;
     public DcMotor rightDrive  = null;
 //    private DcMotor armMotor = null;
-//    private Servo   leftHand = null;
+    public Servo launcher = null;
 //    private Servo   rightHand = null;
 
     // Define Drive constants.  Make them public so they CAN be used by the calling OpMode
-    public static final double MID_SERVO       =  0.5 ;
+    public static final double MID_SERVO       =  0 ;
     public static final double HAND_SPEED      =  0.02 ;  // sets rate to move servo
     public static final double ARM_UP_POWER    =  0.45 ;
     public static final double ARM_DOWN_POWER  = -0.45 ;
@@ -99,9 +99,9 @@ public class RobotHardware {
         // rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Define and initialize ALL installed servos.
-//        leftHand = myOpMode.hardwareMap.get(Servo.class, "left_hand");
+        launcher = myOpMode.hardwareMap.get(Servo.class, "launcher");
 //        rightHand = myOpMode.hardwareMap.get(Servo.class, "right_hand");
-//        leftHand.setPosition(MID_SERVO);
+        launcher.setPosition(MID_SERVO);
 //        rightHand.setPosition(MID_SERVO);
 
         myOpMode.telemetry.addData(">", "Hardware Initialized");

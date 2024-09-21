@@ -98,6 +98,13 @@ public class OutreachBot extends LinearOpMode {
 
             // Combine drive and turn for blended motion. Use RobotHardware class
             driveRobot(drive, turn);
+            if (gamepad1.right_bumper)
+                robot.launcher.setPosition(0.5);
+            // test the number to make sure that it works
+            // else if (gamepad1.left_bumper)
+            //    robot.launcher.setPosition(0.5);
+
+
 
             // Send telemetry messages to explain controls and show robot status
             telemetry.addData("Drive", "Left Stick");
