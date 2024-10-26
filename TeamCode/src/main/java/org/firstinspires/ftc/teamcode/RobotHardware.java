@@ -61,8 +61,8 @@ public class RobotHardware {
     // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
     public DcMotor leftDrive   = null;
     public DcMotor rightDrive  = null;
-//    private DcMotor armMotor = null;
-    public Servo launcher = null;
+    public DcMotor liftMotor = null;
+//    public Servo launcher = null;
 //    private Servo   rightHand = null;
 
     // Define Drive constants.  Make them public so they CAN be used by the calling OpMode
@@ -86,7 +86,7 @@ public class RobotHardware {
         // Define and Initialize Motors (note: need to use reference to actual OpMode).
         leftDrive  = myOpMode.hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = myOpMode.hardwareMap.get(DcMotor.class, "right_drive");
-//        armMotor   = myOpMode.hardwareMap.get(DcMotor.class, "arm");
+        liftMotor   = myOpMode.hardwareMap.get(DcMotor.class, "lift");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -99,9 +99,9 @@ public class RobotHardware {
         // rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Define and initialize ALL installed servos.
-        launcher = myOpMode.hardwareMap.get(Servo.class, "launcher");
+       // launcher = myOpMode.hardwareMap.get(Servo.class, "launcher");
 //        rightHand = myOpMode.hardwareMap.get(Servo.class, "right_hand");
-        launcher.setPosition(MID_SERVO);
+       // launcher.setPosition(MID_SERVO);
 //        rightHand.setPosition(MID_SERVO);
 
         myOpMode.telemetry.addData(">", "Hardware Initialized");

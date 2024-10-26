@@ -91,20 +91,22 @@ public class OutreachBot extends LinearOpMode {
         while (opModeIsActive()) {
 
             // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
-            // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
+            // In this mode the Left stick y axis moves the robot fwd and back, the Left stick x axis turns left and right.
             // This way it's also easy to just drive straight, or just turn.
             drive = -gamepad1.left_stick_y;
-            turn  =  gamepad1.right_stick_x;
+            turn  =  gamepad1.left_stick_x;
 
             // Combine drive and turn for blended motion. Use RobotHardware class
             driveRobot(drive, turn);
-            if (gamepad1.right_bumper)
-                robot.launcher.setPosition(0.5);
+            if (gamepad1.right_bumper) {
+
+            }
+            //    robot.launcher.setPosition(0.5);
             // test the number to make sure that it works
             // else if (gamepad1.left_bumper)
             //    robot.launcher.setPosition(0.5);
 
-
+            robot.liftMotor.setPower(gamepad1.right_stick_y);
 
             // Send telemetry messages to explain controls and show robot status
             telemetry.addData("Drive", "Left Stick");
@@ -127,8 +129,8 @@ public class OutreachBot extends LinearOpMode {
     }
     public void driveRobot(double Drive, double Turn) {
         // Combine drive and turn for blended motion.
-        double left  = Drive + Turn;
-        double right = Drive - Turn;
+        double left  = Drive + Turn*0.7;
+        double right = Drive - Turn*0.7;
 
         // Scale the values so neither exceed +/- 1.0
         double max = Math.max(Math.abs(left), Math.abs(right));
