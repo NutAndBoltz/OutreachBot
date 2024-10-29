@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
@@ -62,11 +63,12 @@ public class RobotHardware {
     public DcMotor leftDrive   = null;
     public DcMotor rightDrive  = null;
     public DcMotor liftMotor = null;
-//    public Servo launcher = null;
-//    private Servo   rightHand = null;
+    public Servo arm = null;
+    public CRServo intake = null;
 
     // Define Drive constants.  Make them public so they CAN be used by the calling OpMode
-    public static final double MID_SERVO       =  0 ;
+    public static final double ARM_STARTING    =  0 ;
+    public static final double INTAKE_STARTING =  0 ;
     public static final double HAND_SPEED      =  0.02 ;  // sets rate to move servo
     public static final double ARM_UP_POWER    =  0.45 ;
     public static final double ARM_DOWN_POWER  = -0.45 ;
@@ -99,10 +101,10 @@ public class RobotHardware {
         // rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Define and initialize ALL installed servos.
-       // launcher = myOpMode.hardwareMap.get(Servo.class, "launcher");
-//        rightHand = myOpMode.hardwareMap.get(Servo.class, "right_hand");
-       // launcher.setPosition(MID_SERVO);
-//        rightHand.setPosition(MID_SERVO);
+       arm = myOpMode.hardwareMap.get(Servo.class, "arm");
+       intake = myOpMode.hardwareMap.get(Servo.class, "intake");
+       arm.setPosition(ARM_STARTING);
+       intake.setPosition(INTAKE_STARTING);
 
         myOpMode.telemetry.addData(">", "Hardware Initialized");
         myOpMode.telemetry.update();

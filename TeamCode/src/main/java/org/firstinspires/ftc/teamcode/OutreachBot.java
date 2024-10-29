@@ -73,11 +73,14 @@ public class OutreachBot extends LinearOpMode {
     // Prefix any hardware functions with "robot." to access this class.
     RobotHardware robot       = new RobotHardware(this);
 
+    double clawOffset = 0;
+    public static final double CLAW_SPEED  = 0.02 ;
+    public static final double INTAKE_SPEED = 0.5; //adjust later
+
     @Override
     public void runOpMode() {
         double drive        = 0;
         double turn         = 0;
-//        double arm          = 0;
 //        double handOffset   = 0;
 
         // initialize all the hardware, using the hardware class. See how clean and simple this is?
@@ -98,13 +101,23 @@ public class OutreachBot extends LinearOpMode {
 
             // Combine drive and turn for blended motion. Use RobotHardware class
             driveRobot(drive, turn);
-            if (gamepad1.right_bumper) {
 
+            if (gamepad1.right_bumper)
+                clawOffset += CLAW_SPEED;
+            else if (gamepad1.left_bumper)
+                clawOffset -= CLAW_SPEED;
+
+            // Move both servos to new position.  Assume servos are mirror image of each other.
+            clawOffset = Range.clip(clawOffset, -0.5, 0.5);
+            robot.arm.setPosition(clawOffset);
+
+            if (gamepad1.dpad_up)
+                robot.intake.setPower(INTAKE_SPEED);
+            else if (gamepad1.dpad_down)
+                robot.intake.setPower(-INTAKE_SPEED); //test later
+            else {
+                robot.intake.setPower(0);
             }
-            //    robot.launcher.setPosition(0.5);
-            // test the number to make sure that it works
-            // else if (gamepad1.left_bumper)
-            //    robot.launcher.setPosition(0.5);
 
             robot.liftMotor.setPower(gamepad1.right_stick_y);
 
