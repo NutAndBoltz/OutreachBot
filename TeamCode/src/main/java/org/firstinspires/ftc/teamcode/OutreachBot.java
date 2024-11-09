@@ -74,18 +74,18 @@ public class OutreachBot extends LinearOpMode {
     RobotHardware robot       = new RobotHardware(this);
 
 
-    public static final double CLAW_OPEN  = 0.5;//might change depending on tests
-    public static final double CLAW_CLOSE  = 0;
+    // public static final double CLAW_OPEN  = 0.5;//might change depending on tests
+    // public static final double CLAW_CLOSE  = 0;
     public static final double BUCKET_COLLECT  = 0;
     public static final double BUCKET_DUMP  = 0.8;
 
     public static final double INTAKE_SPEED = 0.5; //adjust later
     // public static final double ARM_SPEED = 0.3; //add
 
-    double arm2Offset = 0;
+    // double arm2Offset = 0;
 
-    public static final double ARM2_MID_SERVO   =  0.5 ;
-    public static final double ARM2_SPEED  = 0.02 ;
+    //public static final double ARM2_MID_SERVO   =  0.5 ;
+    //public static final double ARM2_SPEED  = 0.02 ;
 
     @Override
     public void runOpMode() {
@@ -121,19 +121,19 @@ public class OutreachBot extends LinearOpMode {
             //one control bucket and specimen arm.
 
             // Use gamepad left & right Bumpers to open and close the claw
-            if (gamepad2.dpad_up) //adjust
-                arm2Offset += ARM2_SPEED;
-            else if (gamepad2.dpad_down)
-                arm2Offset -= ARM2_SPEED;
+//            if (gamepad2.dpad_up) //adjust
+//                arm2Offset += ARM2_SPEED;
+//            else if (gamepad2.dpad_down)
+//                arm2Offset -= ARM2_SPEED;
 
             // Move both servos to new position.  Assume servos are mirror image of each other.
-            arm2Offset = Range.clip(arm2Offset, -0.5, 0.5); //mid servo is .5
-            robot.arm2.setPosition(ARM2_MID_SERVO + arm2Offset);
+//            arm2Offset = Range.clip(arm2Offset, -0.5, 0.5); //mid servo is .5
+//            robot.arm2.setPosition(ARM2_MID_SERVO + arm2Offset);
 
-            if (gamepad2.y)
-                robot.arm2Intake.setPosition(CLAW_OPEN);
-            else if (gamepad2.a)
-                robot.arm2Intake.setPosition(CLAW_CLOSE);
+//            if (gamepad2.y)
+//                robot.arm2Intake.setPosition(CLAW_OPEN);
+//            else if (gamepad2.a)
+//                robot.arm2Intake.setPosition(CLAW_CLOSE);
 
 
             robot.arm1.setPower(gamepad2.right_stick_y); //multiply ARM_SPEED if necessary
@@ -182,6 +182,4 @@ public class OutreachBot extends LinearOpMode {
         }
 
         // Use existing function to drive both wheels.
-        setDrivePower(left, right);
-    }
-}
+        set

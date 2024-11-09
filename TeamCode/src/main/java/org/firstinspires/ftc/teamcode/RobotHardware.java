@@ -65,18 +65,18 @@ public class RobotHardware {
     public DcMotor liftMotor = null; //linear slide: carries bucket and 2nd claw. also make sure to beware of the controls
 
     public DcMotor arm1 = null; //HEX DC Motor
-    public Servo arm2 = null;
+    // public Servo arm2 = null;
 
     public CRServo arm1Intake = null;
-    public Servo arm2Intake = null; //for the 2nd intake to function (around 45 degrees of range). maybe press once to open and press the other way to close?
+    // public Servo arm2Intake = null; //for the 2nd intake to function (around 45 degrees of range). maybe press once to open and press the other way to close?
 
     public Servo bucket = null;
 
 
 
     // Define Drive constants.  Make them public so they CAN be used by the calling OpMode
-    public static final double ARM2_STARTING    =  0 ; //usually 0-1 (0-180)
-    public static final double ARM2_INTAKE_STARTING = 0; //take the horn off from the servo and reattach it: there's a little thing that spin and tell it to initalize
+    // public static final double ARM2_STARTING    =  0 ; //usually 0-1 (0-180)
+    // public static final double ARM2_INTAKE_STARTING = 0; //take the horn off from the servo and reattach it: there's a little thing that spin and tell it to initalize
     public static final double BUCKET_STARTING = 0; //fix later as I test
 
     public static final double HAND_SPEED      =  0.02 ;  // sets rate to move servo
@@ -112,14 +112,14 @@ public class RobotHardware {
         // rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Define and initialize ALL installed servos.
-       arm1Intake = myOpMode.hardwareMap.get(CRServo.class, "arm1Intake");
-        arm2 = myOpMode.hardwareMap.get(Servo.class, "Arm2");//no need for changes
-       arm2Intake = myOpMode.hardwareMap.get(Servo.class,"arm2Intake");
-       bucket = myOpMode.hardwareMap.get(Servo.class,"bucket");
+        arm1Intake = myOpMode.hardwareMap.get(CRServo.class, "arm1Intake");
+        // arm2 = myOpMode.hardwareMap.get(Servo.class, "Arm2");//no need for changes
+        // arm2Intake = myOpMode.hardwareMap.get(Servo.class,"arm2Intake");
+        bucket = myOpMode.hardwareMap.get(Servo.class,"bucket");
 
         bucket.setPosition(BUCKET_STARTING);
-       arm2.setPosition(ARM2_STARTING);
-        arm2Intake.setPosition(ARM2_INTAKE_STARTING);
+        // arm2.setPosition(ARM2_STARTING);
+        // arm2Intake.setPosition(ARM2_INTAKE_STARTING);
 
         myOpMode.telemetry.addData(">", "Hardware Initialized");
         myOpMode.telemetry.update();
@@ -158,6 +158,4 @@ public class RobotHardware {
 //    public void setHandPositions(double offset) {
 //        offset = Range.clip(offset, -0.5, 0.5);
 //        leftHand.setPosition(MID_SERVO + offset);
-//        rightHand.setPosition(MID_SERVO - offset);
-//    }
-}
+//        rightHand.setPosition(MID
