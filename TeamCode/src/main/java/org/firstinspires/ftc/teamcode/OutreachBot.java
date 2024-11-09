@@ -73,9 +73,19 @@ public class OutreachBot extends LinearOpMode {
     // Prefix any hardware functions with "robot." to access this class.
     RobotHardware robot       = new RobotHardware(this);
 
-    double clawOffset = 0;
-    public static final double CLAW_SPEED  = 0.02 ;
+
+    public static final double CLAW_OPEN  = 0.5;//might change depending on tests
+    public static final double CLAW_CLOSE  = 0;
+    public static final double BUCKET_COLLECT  = 0;
+    public static final double BUCKET_DUMP  = 0.8;
+
     public static final double INTAKE_SPEED = 0.5; //adjust later
+    // public static final double ARM_SPEED = 0.3; //add
+
+    double arm2Offset = 0;
+
+    public static final double ARM2_MID_SERVO   =  0.5 ;
+    public static final double ARM2_SPEED  = 0.02 ;
 
     @Override
     public void runOpMode() {
@@ -96,36 +106,54 @@ public class OutreachBot extends LinearOpMode {
             // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
             // In this mode the Left stick y axis moves the robot fwd and back, the Left stick x axis turns left and right.
             // This way it's also easy to just drive straight, or just turn.
-            drive = -gamepad1.left_stick_y;
-            turn  =  gamepad1.left_stick_x;
+           // drive = -gamepad1.left_stick_x;
+           // turn  =  gamepad1.right_stick_y;
+
+            robot.leftDrive.setPower(gamepad1.left_stick_y); //tank drive where each joystick controls one side.
+            robot.rightDrive.setPower(gamepad1.right_stick_y);
+
 
             // Combine drive and turn for blended motion. Use RobotHardware class
-            driveRobot(drive, turn);
+           // driveRobot(drive, turn);
 
-            if (gamepad1.right_bumper)
-                clawOffset += CLAW_SPEED;
-            else if (gamepad1.left_bumper)
-                clawOffset -= CLAW_SPEED;
+            //consult drivers
+            //one drive in charge of driving and sample arm.
+            //one control bucket and specimen arm.
+
+            // Use gamepad left & right Bumpers to open and close the claw
+            if (gamepad2.dpad_up) //adjust
+                arm2Offset += ARM2_SPEED;
+            else if (gamepad2.dpad_down)
+                arm2Offset -= ARM2_SPEED;
 
             // Move both servos to new position.  Assume servos are mirror image of each other.
-            clawOffset = Range.clip(clawOffset, -0.5, 0.5);
-            robot.arm.setPosition(clawOffset);
+            arm2Offset = Range.clip(arm2Offset, -0.5, 0.5); //mid servo is .5
+            robot.arm2.setPosition(ARM2_MID_SERVO + arm2Offset);
 
-            if (gamepad1.dpad_up)
-                robot.intake.setPower(INTAKE_SPEED);
-            else if (gamepad1.dpad_down)
-                robot.intake.setPower(-INTAKE_SPEED); //test later
-            else {
-                robot.intake.setPower(0);
-            }
+            if (gamepad2.y)
+                robot.arm2Intake.setPosition(CLAW_OPEN);
+            else if (gamepad2.a)
+                robot.arm2Intake.setPosition(CLAW_CLOSE);
 
-            robot.liftMotor.setPower(gamepad1.right_stick_y);
+
+            robot.arm1.setPower(gamepad2.right_stick_y); //multiply ARM_SPEED if necessary
+
+            robot.arm1Intake.setPower(gamepad2.left_trigger-gamepad2.right_trigger); //maybe switch left and right based on test
+            //dont press both at the same time, since it wont move.
+
+            robot.liftMotor.setPower(gamepad2.left_stick_y); //make it adjustable so that heights can be accurate. change to dpad.
+
+            if (gamepad2.x)
+                robot.bucket.setPosition(BUCKET_COLLECT);
+            else if (gamepad2.b)
+                robot.bucket.setPosition(BUCKET_DUMP);
+
 
             // Send telemetry messages to explain controls and show robot status
             telemetry.addData("Drive", "Left Stick");
-            telemetry.addData("Turn", "Right Stick");
+            telemetry.addData("Turn", "Right Stick"); //doesn't really matter: only sends instructions to driver station.
 
-            telemetry.addData("Drive Power", "%.2f", drive);
+            telemetry.addData("Drive Power", "%.2f", drive); //references drive and turn, making it more helpful since it tells you things you don't know
             telemetry.addData("Turn Power",  "%.2f", turn);
 //            telemetry.addData("Arm Power",  "%.2f", arm);
 //            telemetry.addData("Hand Position",  "Offset = %.2f", handOffset);
@@ -142,7 +170,7 @@ public class OutreachBot extends LinearOpMode {
     }
     public void driveRobot(double Drive, double Turn) {
         // Combine drive and turn for blended motion.
-        double left  = Drive + Turn*0.7;
+        double left  = Drive + Turn*0.7; // avoiding excessive turn speed
         double right = Drive - Turn*0.7;
 
         // Scale the values so neither exceed +/- 1.0
