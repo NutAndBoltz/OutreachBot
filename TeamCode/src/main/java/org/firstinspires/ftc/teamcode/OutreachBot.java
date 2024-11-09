@@ -136,7 +136,7 @@ public class OutreachBot extends LinearOpMode {
 //                robot.arm2Intake.setPosition(CLAW_CLOSE);
 
 
-            robot.arm1.setPower(gamepad2.right_stick_y); //multiply ARM_SPEED if necessary
+            robot.arm1.setPower(gamepad2.right_stick_y*0.7); //multiply ARM_SPEED if necessary
 
             robot.arm1Intake.setPower(gamepad2.left_trigger-gamepad2.right_trigger); //maybe switch left and right based on test
             //dont press both at the same time, since it wont move.
