@@ -62,22 +62,19 @@ public class RobotHardware {
     // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
     public DcMotor leftDrive   = null;
     public DcMotor rightDrive  = null;
-    public DcMotor liftMotor = null; //linear slide: carries bucket and 2nd claw. also make sure to beware of the controls
+    //public DcMotor liftMotor = null; //linear slide
+    public DcMotor shoulder1 = null; //hex core motor for arm (shoulder)
+    public DcMotor shoulder2 = null; //hex core motor same arm (shoulder)
 
-    public DcMotor arm1 = null; //HEX DC Motor
-    // public Servo arm2 = null;
-
-    public CRServo arm1Intake = null;
-    // public Servo arm2Intake = null; //for the 2nd intake to function (around 45 degrees of range). maybe press once to open and press the other way to close?
-
-    public Servo bucket = null;
-
-
+    public CRServo arm_slide; //rack and pinion on arm
+    public Servo long_intake = null; //forearm intake
+    public Servo long_wrist = null; //wrist for forearm intake
+    public Servo arm_connector = null; //elbow
+    public Servo short_intake = null; //arm intake
 
     // Define Drive constants.  Make them public so they CAN be used by the calling OpMode
     // public static final double ARM2_STARTING    =  0 ; //usually 0-1 (0-180)
     // public static final double ARM2_INTAKE_STARTING = 0; //take the horn off from the servo and reattach it: there's a little thing that spin and tell it to initalize
-    public static final double BUCKET_STARTING = 0; //fix later as I test
 
     public static final double HAND_SPEED      =  0.02 ;  // sets rate to move servo
     public static final double ARM_UP_POWER    =  0.45 ;
@@ -98,8 +95,9 @@ public class RobotHardware {
         // Define and Initialize Motors (note: need to use reference to actual OpMode).
         leftDrive  = myOpMode.hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = myOpMode.hardwareMap.get(DcMotor.class, "right_drive");
-        liftMotor   = myOpMode.hardwareMap.get(DcMotor.class, "lift");
-        arm1 = myOpMode.hardwareMap.get(DcMotor.class, "Arm1");
+        //liftMotor   = myOpMode.hardwareMap.get(DcMotor.class, "lift"); //LIFT FOR HANGING AND SPECIMEN?
+        shoulder1 = myOpMode.hardwareMap.get(DcMotor.class, "Shoulder1"); //HEX DC MOTOR
+        shoulder2 = myOpMode.hardwareMap.get(DcMotor.class, "Shoulder2"); //HEX DC MOTOR
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -112,14 +110,16 @@ public class RobotHardware {
         // rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Define and initialize ALL installed servos.
-        arm1Intake = myOpMode.hardwareMap.get(CRServo.class, "arm1Intake");
-        // arm2 = myOpMode.hardwareMap.get(Servo.class, "Arm2");//no need for changes
-        // arm2Intake = myOpMode.hardwareMap.get(Servo.class,"arm2Intake");
-        bucket = myOpMode.hardwareMap.get(Servo.class,"bucket");
+        arm_slide = myOpMode.hardwareMap.get(CRServo.class,"Arm Slide");
+        long_intake = myOpMode.hardwareMap.get(Servo.class, "Forearm Intake");
+        long_wrist = myOpMode.hardwareMap.get(Servo.class, "Wrist");//no need for changes
+        arm_connector = myOpMode.hardwareMap.get(Servo.class,"Elbow");
+        short_intake = myOpMode.hardwareMap.get(Servo.class,"Arm_Intake");
 
-        bucket.setPosition(BUCKET_STARTING);
-        // arm2.setPosition(ARM2_STARTING);
-        // arm2Intake.setPosition(ARM2_INTAKE_STARTING);
+       //long_intake.setPosition(); //set position by creating a drive constant and add that variable into the parameters
+        //long_wrist.setPosition();
+        //arm_connector.setPosition();
+        //short_intake.setPosition();
 
         myOpMode.telemetry.addData(">", "Hardware Initialized");
         myOpMode.telemetry.update();

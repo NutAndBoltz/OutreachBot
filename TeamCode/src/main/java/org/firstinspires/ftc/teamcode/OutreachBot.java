@@ -71,15 +71,14 @@ public class OutreachBot extends LinearOpMode {
 
     // Create a RobotHardware object to be used to access robot hardware.
     // Prefix any hardware functions with "robot." to access this class.
-    RobotHardware robot       = new RobotHardware(this);
-
+    RobotHardware robot = new RobotHardware(this);
 
     // public static final double CLAW_OPEN  = 0.5;//might change depending on tests
     // public static final double CLAW_CLOSE  = 0;
-    public static final double BUCKET_COLLECT  = 0;
-    public static final double BUCKET_DUMP  = 0.8;
+    //public static final double BUCKET_COLLECT  = 0;
+    //public static final double BUCKET_DUMP  = 0.8;
 
-    public static final double INTAKE_SPEED = 0.5; //adjust later
+    //public static final double INTAKE_SPEED = 0.5; //adjust later
     // public static final double ARM_SPEED = 0.3; //add
 
     // double arm2Offset = 0;
@@ -89,8 +88,8 @@ public class OutreachBot extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        double drive        = 0;
-        double turn         = 0;
+        double drive = 0;
+        double turn = 0;
 //        double handOffset   = 0;
 
         // initialize all the hardware, using the hardware class. See how clean and simple this is?
@@ -107,18 +106,15 @@ public class OutreachBot extends LinearOpMode {
             // In this mode the Left stick y axis moves the robot fwd and back, the Left stick x axis turns left and right.
             // This way it's also easy to just drive straight, or just turn.
            // drive = -gamepad1.left_stick_x;
-           // turn  =  gamepad1.right_stick_y;
+           // turn = gamepad1.right_stick_y;
 
             robot.leftDrive.setPower(gamepad1.left_stick_y); //tank drive where each joystick controls one side.
-            robot.rightDrive.setPower(gamepad1.right_stick_y);
+            robot.rightDrive.setPower(gamepad1.right_stick_y); //don't change this
 
 
             // Combine drive and turn for blended motion. Use RobotHardware class
-           // driveRobot(drive, turn);
+            // driveRobot(drive, turn);
 
-            //consult drivers
-            //one drive in charge of driving and sample arm.
-            //one control bucket and specimen arm.
 
             // Use gamepad left & right Bumpers to open and close the claw
 //            if (gamepad2.dpad_up) //adjust
@@ -136,17 +132,9 @@ public class OutreachBot extends LinearOpMode {
 //                robot.arm2Intake.setPosition(CLAW_CLOSE);
 
 
-            robot.arm1.setPower(gamepad2.right_stick_y*0.7); //multiply ARM_SPEED if necessary
+            //robot.arm1.setPower(gamepad2.right_stick_y*0.7); //multiply ARM_SPEED if necessary
 
-            robot.arm1Intake.setPower(gamepad2.left_trigger-gamepad2.right_trigger); //maybe switch left and right based on test
-            //dont press both at the same time, since it wont move.
-
-            robot.liftMotor.setPower(gamepad2.left_stick_y); //make it adjustable so that heights can be accurate. change to dpad.
-
-            if (gamepad2.x)
-                robot.bucket.setPosition(BUCKET_COLLECT);
-            else if (gamepad2.b)
-                robot.bucket.setPosition(BUCKET_DUMP);
+            //robot.liftMotor.setPower(gamepad2.left_stick_y); //make it adjustable so that heights can be accurate. change to dpad.
 
 
             // Send telemetry messages to explain controls and show robot status
@@ -154,7 +142,7 @@ public class OutreachBot extends LinearOpMode {
             telemetry.addData("Turn", "Right Stick"); //doesn't really matter: only sends instructions to driver station.
 
             telemetry.addData("Drive Power", "%.2f", drive); //references drive and turn, making it more helpful since it tells you things you don't know
-            telemetry.addData("Turn Power",  "%.2f", turn);
+            telemetry.addData("Turn Power", "%.2f", turn);
 //            telemetry.addData("Arm Power",  "%.2f", arm);
 //            telemetry.addData("Hand Position",  "Offset = %.2f", handOffset);
             telemetry.update();
@@ -163,6 +151,8 @@ public class OutreachBot extends LinearOpMode {
             sleep(50);
         }
     }
+
+    /*
     public void setDrivePower(double leftWheel, double rightWheel) {
         // Output the values to the motor drives.
         robot.leftDrive.setPower(leftWheel);
@@ -182,4 +172,5 @@ public class OutreachBot extends LinearOpMode {
         }
 
         // Use existing function to drive both wheels.
-        set
+        */
+}
