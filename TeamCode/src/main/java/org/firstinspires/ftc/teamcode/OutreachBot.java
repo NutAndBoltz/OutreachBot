@@ -73,18 +73,17 @@ public class OutreachBot extends LinearOpMode {
     // Prefix any hardware functions with "robot." to access this class.
     RobotHardware robot = new RobotHardware(this);
 
-    // public static final double CLAW_OPEN  = 0.5;//might change depending on tests
-    // public static final double CLAW_CLOSE  = 0;
-    //public static final double BUCKET_COLLECT  = 0;
-    //public static final double BUCKET_DUMP  = 0.8;
+//CLAW POSITIONS
+    public static final double CLAW_OPEN  = 0.5;//might change depending on tests
+    public static final double CLAW_CLOSE  = 0; //might change depending on tests
 
-    //public static final double INTAKE_SPEED = 0.5; //adjust later
-    // public static final double ARM_SPEED = 0.3; //add
-
+    //ADD IF NECESSARY
+    // public static final double ARM_SPEED = 0.3; //a
     // double arm2Offset = 0;
 
-    //public static final double ARM2_MID_SERVO   =  0.5 ;
-    //public static final double ARM2_SPEED  = 0.02 ;
+    //WRIST AND SHOULDER
+    //public static final double WRIST_SPEED  =  0.5 ;
+    //public static final double SHOULDER_SPEED  = 0.02 ;
 
     @Override
     public void runOpMode() {
@@ -92,30 +91,26 @@ public class OutreachBot extends LinearOpMode {
         double turn = 0;
 //        double handOffset   = 0;
 
-        // initialize all the hardware, using the hardware class. See how clean and simple this is?
+        // Initialize all the hardware
         robot.init();
 
         // Send telemetry message to signify robot waiting;
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+            //GAMEPAD
 
-            // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
-            // In this mode the Left stick y axis moves the robot fwd and back, the Left stick x axis turns left and right.
-            // This way it's also easy to just drive straight, or just turn.
-           // drive = -gamepad1.left_stick_x;
-           // turn = gamepad1.right_stick_y;
-
+            // Driving Controls
             robot.leftDrive.setPower(gamepad1.left_stick_y); //tank drive where each joystick controls one side.
             robot.rightDrive.setPower(gamepad1.right_stick_y); //don't change this
-
 
             // Combine drive and turn for blended motion. Use RobotHardware class
             // driveRobot(drive, turn);
 
-
+            //Claw Controls:
             // Use gamepad left & right Bumpers to open and close the claw
 //            if (gamepad2.dpad_up) //adjust
 //                arm2Offset += ARM2_SPEED;
@@ -126,15 +121,22 @@ public class OutreachBot extends LinearOpMode {
 //            arm2Offset = Range.clip(arm2Offset, -0.5, 0.5); //mid servo is .5
 //            robot.arm2.setPosition(ARM2_MID_SERVO + arm2Offset);
 
-//            if (gamepad2.y)
-//                robot.arm2Intake.setPosition(CLAW_OPEN);
-//            else if (gamepad2.a)
-//                robot.arm2Intake.setPosition(CLAW_CLOSE);
+            //GAMEPAD 2:
 
+            //ARM_SLIDE
+            robot.arm_slide.setPower(gamepad2.right_stick_y*0.7);
 
-            //robot.arm1.setPower(gamepad2.right_stick_y*0.7); //multiply ARM_SPEED if necessary
+            //INTAKE
+            if (gamepad2.x)
+                robot.intake.setPosition(CLAW_OPEN);
+            else if (gamepad2.b)
+               robot.intake.setPosition(CLAW_CLOSE);
 
-            //robot.liftMotor.setPower(gamepad2.left_stick_y); //make it adjustable so that heights can be accurate. change to dpad.
+            //ARM SLIDE: Both motors should spin in the same direction with same stick, but are placed facing each other. Make sure to adjust to
+            robot.shoulder1.setPower(gamepad2.right_stick_y*0.7);
+            robot.shoulder2.setPower(gamepad2.right_stick_y*0.7);
+
+            //Mini Auto idea: Measure and add a button that'll make the racket to spin to max in a short amount of time.
 
 
             // Send telemetry messages to explain controls and show robot status

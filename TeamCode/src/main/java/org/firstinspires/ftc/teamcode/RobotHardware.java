@@ -67,10 +67,8 @@ public class RobotHardware {
     public DcMotor shoulder2 = null; //hex core motor same arm (shoulder)
 
     public CRServo arm_slide; //rack and pinion on arm
-    public Servo long_intake = null; //forearm intake
-    public Servo long_wrist = null; //wrist for forearm intake
-    public Servo arm_connector = null; //elbow
-    public Servo short_intake = null; //arm intake
+    public Servo intake = null; //forearm intake
+    public Servo wrist = null; //wrist for forearm intake
 
     // Define Drive constants.  Make them public so they CAN be used by the calling OpMode
     // public static final double ARM2_STARTING    =  0 ; //usually 0-1 (0-180)
@@ -111,12 +109,10 @@ public class RobotHardware {
 
         // Define and initialize ALL installed servos.
         arm_slide = myOpMode.hardwareMap.get(CRServo.class,"Arm Slide");
-        long_intake = myOpMode.hardwareMap.get(Servo.class, "Forearm Intake");
-        long_wrist = myOpMode.hardwareMap.get(Servo.class, "Wrist");//no need for changes
-        arm_connector = myOpMode.hardwareMap.get(Servo.class,"Elbow");
-        short_intake = myOpMode.hardwareMap.get(Servo.class,"Arm_Intake");
+        intake = myOpMode.hardwareMap.get(Servo.class, "Forearm Intake");
+        wrist = myOpMode.hardwareMap.get(Servo.class, "Wrist");//no
 
-       //long_intake.setPosition(); //set position by creating a drive constant and add that variable into the parameters
+       //intake.setPosition(); //set position by creating a drive constant and add that variable into the parameters
         //long_wrist.setPosition();
         //arm_connector.setPosition();
         //short_intake.setPosition();
