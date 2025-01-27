@@ -109,8 +109,8 @@ public class RobotHardware {
 
         // Define and initialize ALL installed servos.
         arm_slide = myOpMode.hardwareMap.get(CRServo.class,"Arm Slide");
-        intake = myOpMode.hardwareMap.get(Servo.class, "Forearm Intake");
-        wrist = myOpMode.hardwareMap.get(Servo.class, "Wrist");//no
+        intake = myOpMode.hardwareMap.get(Servo.class, "Intake");
+        wrist = myOpMode.hardwareMap.get(Servo.class, "Wrist");
 
        //intake.setPosition(); //set position by creating a drive constant and add that variable into the parameters
         //long_wrist.setPosition();
